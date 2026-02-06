@@ -4,8 +4,7 @@ export const getGeminiResponse = async (prompt: string, context: string) => {
   const apiKey = process.env.API_KEY;
   
   if (!apiKey) {
-    console.error("API_KEY no configurada en los Secrets de GitHub.");
-    return "Hola. Mi sistema de IA requiere una configuración técnica adicional (API_KEY) para responderte. Por ahora, puedes contactarnos directamente por WhatsApp.";
+    return "Hola. Actualmente mi sistema de inteligencia artificial requiere una configuración de seguridad adicional. Por favor, contáctanos directamente a nuestro WhatsApp +57 310 613 5299 para brindarte asesoría inmediata.";
   }
 
   const ai = new GoogleGenAI({ apiKey });
@@ -13,26 +12,25 @@ export const getGeminiResponse = async (prompt: string, context: string) => {
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
-      contents: prompt,
+      contents: [{ parts: [{ text: `Usuario pregunta: ${prompt}. Contexto: ${context}` }] }],
       config: {
-        systemInstruction: `Eres el asistente virtual oficial de "Pilares Jurídicos e Inmobiliaria SAS". 
-        Tu objetivo es ayudar a los clientes con dudas sobre los servicios específicos de la empresa:
+        systemInstruction: `Eres el asesor virtual de "Pilares Jurídicos e Inmobiliaria SAS". 
+        Tu tono debe ser extremadamente formal, servicial y experto.
         
-        1. PILARES JURÍDICOS (Derecho Colombiano): Divorcios, sucesiones, arriendos, escrituración y cobranzas.
-        2. INMOBILIARIA: Venta, compra, gestión de arriendos y avalúos.
-
-        Contexto actual: ${context}.
-        Ubicación: Cra 10 No 16 39 oficina 1605, Edificio Seguros Bolívar, Bogotá.
+        INFORMACIÓN CLAVE:
+        - PILARES JURÍDICOS: Especialistas en divorcios, sucesiones, cobro de cartera, derecho inmobiliario y notarial.
+        - INMOBILIARIA: Venta, arriendos y avalúos en Bogotá.
+        - UBICACIÓN: Cra 10 No 16 39 oficina 1605, Edificio Seguros Bolívar, Bogotá.
+        - CONTACTO: WhatsApp +57 310 613 5299.
         
-        Responde de forma elegante, profesional y concisa. 
-        IMPORTANTE: Invita siempre a agendar una cita formal o contactar por WhatsApp para análisis detallados.`,
+        Responde brevemente y siempre invita a agendar una cita para temas legales complejos.`,
         temperature: 0.7,
       }
     });
 
-    return response.text || "No pude generar una respuesta en este momento.";
+    return response.text || "No pude generar una respuesta. Por favor intenta de nuevo o llámanos.";
   } catch (error) {
     console.error("Gemini Error:", error);
-    return "Lo siento, tuve un problema al procesar tu consulta. Por favor, intenta de nuevo o contáctanos por WhatsApp.";
+    return "Lo siento, tuve un problema técnico. Puedes contactarnos al +57 310 613 5299.";
   }
 };
