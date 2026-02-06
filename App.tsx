@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { ViewMode } from './types';
 import LandingView from './components/LandingView';
@@ -11,13 +10,12 @@ import AIAssistant from './components/AIAssistant';
 const App: React.FC = () => {
   const [view, setView] = useState<ViewMode>(ViewMode.HOME);
 
-  // Simple scroll to top on view change
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [view]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-white selection:bg-gold/30">
       <Navbar currentView={view} setView={setView} />
       
       <main className="flex-grow">

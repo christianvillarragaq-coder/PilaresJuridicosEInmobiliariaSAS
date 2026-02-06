@@ -1,4 +1,3 @@
-
 export enum ViewMode {
   HOME = 'home',
   LEGAL = 'legal',

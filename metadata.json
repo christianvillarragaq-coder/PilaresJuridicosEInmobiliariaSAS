@@ -1,7 +1,6 @@
-
 {
   "name": "Pilares Jurídicos e Inmobiliaria SAS",
-  "description": "Firma legal y consultoría inmobiliaria con sede en el Edificio Seguros Bolívar, Bogotá. Especialistas en Derecho de Familia, Inmobiliario y Notarial.",
+  "description": "Firma legal y consultoría inmobiliaria con sede en Bogotá. Especialistas en Derecho de Familia, Inmobiliario y Notarial.",
   "requestFramePermissions": [
     "camera",
     "microphone"

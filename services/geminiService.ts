@@ -1,42 +1,34 @@
-
 import { GoogleGenAI } from "@google/genai";
 
-const API_KEY = process.env.API_KEY || "";
-
 export const getGeminiResponse = async (prompt: string, context: string) => {
-  if (!API_KEY) {
-    return "Error: API Key no configurada.";
+  const apiKey = process.env.API_KEY;
+  if (!apiKey) return "Error: API Key no configurada.";
+
+  const ai = new GoogleGenAI({ apiKey });
+  
+  try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-3-flash-preview',
+      contents: prompt,
+      config: {
+        systemInstruction: `Eres el asistente virtual oficial de "Pilares Jurídicos e Inmobiliaria SAS". 
+        Tu objetivo es ayudar a los clientes con dudas sobre los servicios específicos de la empresa:
+        
+        1. PILARES JURÍDICOS (Derecho Colombiano): Divorcios, sucesiones, arriendos, escrituración y cobranzas.
+        2. INMOBILIARIA: Venta, compra, gestión de arriendos y avalúos.
+
+        Contexto actual: ${context}.
+        Ubicación: Cra 10 No 16 39 oficina 1605, Edificio Seguros Bolívar, Bogotá.
+        
+        Responde de forma elegante, profesional y concisa. 
+        IMPORTANTE: Invita siempre a agendar una cita formal o contactar por WhatsApp para análisis detallados.`,
+        temperature: 0.7,
+      }
+    });
+
+    return response.text || "No pude generar una respuesta.";
+  } catch (error) {
+    console.error("Gemini Error:", error);
+    return "Tuvimos un problema técnico. Por favor, contáctanos por WhatsApp.";
   }
-
-  const ai = new GoogleGenAI({ apiKey: API_KEY });
-  const model = ai.models.generateContent({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: {
-      systemInstruction: `Eres el asistente virtual oficial de "Pilares Jurídicos e Inmobiliaria". 
-      Tu objetivo es ayudar a los clientes con dudas sobre los servicios específicos de la empresa:
-      
-      1. PILARES JURÍDICOS (Derecho Colombiano):
-         - Derecho de Familia: Divorcios, sucesiones, cuotas alimentarias, custodias.
-         - Derecho Inmobiliario: Arrendamientos, compraventas, propiedad horizontal, estudios de títulos.
-         - Derecho Notarial: Escrituración, registros, trámites notariales.
-         - Cobranzas: Recuperación de cartera, cobros pre-jurídicos y jurídicos.
-      
-      2. INMOBILIARIA:
-         - Venta y compra de propiedades (Casas, Apartamentos, Lotes).
-         - Gestión de arrendamientos.
-         - Avalúos comerciales y técnicos.
-
-      Contexto de navegación actual: ${context}.
-      Responde siempre de forma profesional, elegante, empática y concisa. 
-      Usa un tono corporativo pero cercano. 
-      IMPORTANTE: No des consejos legales definitivos; indica que son orientaciones generales e invita siempre a agendar una cita formal con los expertos de Pilares para un análisis detallado del caso.`,
-      temperature: 0.7,
-      topP: 0.95,
-      topK: 64,
-    }
-  });
-
-  const response = await model;
-  return response.text;
 };
