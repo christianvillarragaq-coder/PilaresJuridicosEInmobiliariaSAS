@@ -7,58 +7,69 @@ interface LandingViewProps {
 
 const LandingView: React.FC<LandingViewProps> = ({ onSelect }) => {
   return (
-    <div className="flex flex-col md:flex-row h-[calc(100vh-80px)] overflow-hidden">
-      {/* Sección Pilares Jurídicos */}
+    <div className="flex flex-col md:flex-row h-screen md:h-[calc(100vh-80px)] overflow-hidden bg-black">
+      {/* SECCIÓN JURÍDICA */}
       <div 
-        className="group relative flex-1 flex flex-col items-center justify-center cursor-pointer transition-all duration-700 ease-in-out hover:flex-[1.4] overflow-hidden"
+        className="group relative flex-1 flex flex-col items-center justify-center cursor-pointer transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] hover:flex-[2] border-b md:border-b-0 md:border-r border-[#d4af37]/20"
         onClick={() => onSelect(ViewMode.LEGAL)}
       >
         <div 
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=1600')` }}
+          className="absolute inset-0 bg-cover bg-center grayscale-[20%] group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
+          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&q=80&w=1600')` }}
         />
-        <div className="absolute inset-0 bg-[#0f1a2e]/85 group-hover:bg-[#0f1a2e]/75 transition-colors duration-500" />
+        <div className="absolute inset-0 bg-[#0f1a2e]/90 group-hover:bg-[#0f1a2e]/70 transition-colors duration-700" />
         
-        <div className="relative z-10 text-center px-6">
-          <div className="mb-6 transform transition-all duration-700 group-hover:-translate-y-4">
-             <div className="w-20 h-20 mb-6 border border-[#d4af37] rounded-full mx-auto flex items-center justify-center text-4xl bg-[#d4af37]/10 backdrop-blur-sm">⚖️</div>
-             <h2 className="text-4xl md:text-5xl font-serif text-white mb-2 font-bold tracking-tight">Pilares Jurídicos</h2>
-             <p className="text-[#d4af37] font-semibold text-[10px] tracking-[0.4em] uppercase">Estrategia & Respaldo Legal</p>
+        <div className="relative z-10 text-center px-10 max-w-md">
+          <div className="mb-8 transform transition-all duration-1000 group-hover:-translate-y-6">
+             <div className="w-24 h-24 mb-6 border-2 border-[#d4af37] rounded-full mx-auto flex items-center justify-center text-5xl bg-[#d4af37]/10 backdrop-blur-md shadow-[0_0_50px_rgba(212,175,55,0.2)]">⚖️</div>
+             <h2 className="text-4xl md:text-6xl font-serif text-white mb-3 font-bold tracking-tight leading-none">Pilares Jurídicos</h2>
+             <p className="text-[#d4af37] font-bold text-[11px] tracking-[0.5em] uppercase opacity-80">Excelencia & Compromiso</p>
           </div>
-          <div className="opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-4 group-hover:translate-y-0">
-            <p className="text-gray-300 text-sm font-light mb-8 max-w-xs mx-auto">Divorcios, Sucesiones, Derecho Notarial e Inmobiliario en Bogotá.</p>
-            <button className="border border-[#d4af37] px-8 py-3 text-[#d4af37] font-bold text-[10px] tracking-[0.3em] uppercase hover:bg-[#d4af37] hover:text-white transition-all duration-300">Consultar ahora</button>
+          
+          <div className="overflow-hidden max-h-0 group-hover:max-h-48 transition-all duration-1000 ease-in-out">
+            <p className="text-gray-300 text-sm font-light mb-8 leading-relaxed italic">
+              "Cimentando su tranquilidad con respaldo legal especializado en Familia, Notarial e Inmobiliario."
+            </p>
+            <button className="bg-gold-gradient text-[#0f1a2e] px-10 py-3 font-bold text-[11px] tracking-[0.3em] uppercase rounded-sm hover:brightness-110 transition-all shadow-lg">
+              Consultoría Legal
+            </button>
           </div>
         </div>
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-1 h-12 bg-[#d4af37]/30 hidden md:block"></div>
+        
+        {/* Adorno visual inferior */}
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-px h-16 bg-[#d4af37]/40 group-hover:h-24 transition-all duration-700"></div>
       </div>
 
-      {/* Separador Central para Desktop */}
-      <div className="hidden md:block w-[1px] bg-[#d4af37]/20 z-20"></div>
-
-      {/* Sección Inmobiliaria */}
+      {/* SECCIÓN INMOBILIARIA */}
       <div 
-        className="group relative flex-1 flex flex-col items-center justify-center cursor-pointer transition-all duration-700 ease-in-out hover:flex-[1.4] overflow-hidden"
+        className="group relative flex-1 flex flex-col items-center justify-center cursor-pointer transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] hover:flex-[2]"
         onClick={() => onSelect(ViewMode.REAL_ESTATE)}
       >
         <div 
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=1600')` }}
+          className="absolute inset-0 bg-cover bg-center grayscale-[20%] group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
+          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=1600')` }}
         />
-        <div className="absolute inset-0 bg-[#1a2e4c]/85 group-hover:bg-[#1a2e4c]/75 transition-colors duration-500" />
+        <div className="absolute inset-0 bg-[#1a2e4c]/90 group-hover:bg-[#1a2e4c]/75 transition-colors duration-700" />
 
-        <div className="relative z-10 text-center px-6">
-          <div className="mb-6 transform transition-all duration-700 group-hover:-translate-y-4">
-             <div className="w-20 h-20 mb-6 border border-white/30 rounded-full mx-auto flex items-center justify-center text-4xl bg-white/5 backdrop-blur-sm">🏠</div>
-             <h2 className="text-4xl md:text-5xl font-serif text-white mb-2 font-bold tracking-tight">Inmobiliaria</h2>
-             <p className="text-gray-400 font-semibold text-[10px] tracking-[0.4em] uppercase">Gestión de Activos</p>
+        <div className="relative z-10 text-center px-10 max-w-md">
+          <div className="mb-8 transform transition-all duration-1000 group-hover:-translate-y-6">
+             <div className="w-24 h-24 mb-6 border-2 border-white/40 rounded-full mx-auto flex items-center justify-center text-5xl bg-white/5 backdrop-blur-md shadow-[0_0_50px_rgba(255,255,255,0.1)]">🏠</div>
+             <h2 className="text-4xl md:text-5xl font-serif text-white mb-3 font-bold tracking-tight leading-none">Inmobiliaria</h2>
+             <p className="text-gray-400 font-bold text-[11px] tracking-[0.5em] uppercase opacity-80">Gestión de Activos</p>
           </div>
-          <div className="opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-4 group-hover:translate-y-0">
-            <p className="text-gray-300 text-sm font-light mb-8 max-w-xs mx-auto">Venta, arrendamientos y avalúos técnicos certificados.</p>
-            <button className="border border-white px-8 py-3 text-white font-bold text-[10px] tracking-[0.3em] uppercase hover:bg-white hover:text-[#1a2e4c] transition-all duration-300">Ver propiedades</button>
+
+          <div className="overflow-hidden max-h-0 group-hover:max-h-48 transition-all duration-1000 ease-in-out">
+            <p className="text-gray-300 text-sm font-light mb-8 leading-relaxed italic">
+              "Expertos en administración de arriendos, ventas estratégicas y avalúos certificados en Bogotá."
+            </p>
+            <button className="bg-white text-[#1a2e4c] px-10 py-3 font-bold text-[11px] tracking-[0.3em] uppercase rounded-sm hover:bg-gray-100 transition-all shadow-lg">
+              Ver Propiedades
+            </button>
           </div>
         </div>
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-1 h-12 bg-white/30 hidden md:block"></div>
+        
+        {/* Adorno visual inferior */}
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-px h-16 bg-white/30 group-hover:h-24 transition-all duration-700"></div>
       </div>
     </div>
   );
