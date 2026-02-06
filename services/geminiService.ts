@@ -2,7 +2,11 @@ import { GoogleGenAI } from "@google/genai";
 
 export const getGeminiResponse = async (prompt: string, context: string) => {
   const apiKey = process.env.API_KEY;
-  if (!apiKey) return "Error: API Key no configurada.";
+  
+  if (!apiKey) {
+    console.error("API_KEY no configurada en los Secrets de GitHub.");
+    return "Hola. Mi sistema de IA requiere una configuración técnica adicional (API_KEY) para responderte. Por ahora, puedes contactarnos directamente por WhatsApp.";
+  }
 
   const ai = new GoogleGenAI({ apiKey });
   
@@ -26,9 +30,9 @@ export const getGeminiResponse = async (prompt: string, context: string) => {
       }
     });
 
-    return response.text || "No pude generar una respuesta.";
+    return response.text || "No pude generar una respuesta en este momento.";
   } catch (error) {
     console.error("Gemini Error:", error);
-    return "Tuvimos un problema técnico. Por favor, contáctanos por WhatsApp.";
+    return "Lo siento, tuve un problema al procesar tu consulta. Por favor, intenta de nuevo o contáctanos por WhatsApp.";
   }
 };
