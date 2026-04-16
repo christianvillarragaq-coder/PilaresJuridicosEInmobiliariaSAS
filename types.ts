@@ -20,6 +20,9 @@ export interface Property {
   beds: number;
   baths: number;
   area: string;
+  description?: string;
+  imageUrls?: string[];
+  videoUrl?: string;
 }
 
 export interface ChatMessage {
