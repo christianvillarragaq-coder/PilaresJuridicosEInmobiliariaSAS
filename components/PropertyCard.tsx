@@ -73,23 +73,32 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
             </p>
           )}
 
-          <button className="w-full bg-gray-900 text-white py-3 rounded-xl font-bold hover:bg-gold transition-colors">
+          <a 
+            href={`mailto:ventas@pilaresjuridicos.com?subject=Me interesa: ${encodeURIComponent(property.title)}`}
+            className="w-full bg-gray-900 text-white py-3 rounded-xl font-bold hover:bg-gold transition-colors block text-center"
+          >
             Solicitar Información
-          </button>
+          </a>
         </div>
       </div>
 
       {/* Video Modal (Embed) */}
       {showVideoModal && property.videoUrl && (
-        <div className="fixed inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-4">
+        <div 
+          className="fixed inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-4"
+          onClick={() => setShowVideoModal(false)}
+        >
           <button 
             onClick={() => setShowVideoModal(false)}
-            className="absolute top-6 right-6 text-white hover:text-gold text-4xl p-2"
+            className="absolute top-6 right-6 text-white hover:text-gold text-4xl p-2 z-50"
           >
             &times;
           </button>
           
-          <div className="w-full max-w-4xl aspect-video bg-black rounded-lg overflow-hidden shadow-2xl">
+          <div 
+            className="w-full max-w-4xl aspect-video bg-black rounded-lg overflow-hidden shadow-2xl relative z-10"
+            onClick={(e) => e.stopPropagation()}
+          >
             {isYouTube ? (
               <iframe 
                 src={getEmbedUrl(property.videoUrl)} 
