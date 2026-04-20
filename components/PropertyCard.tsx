@@ -8,16 +8,20 @@ interface PropertyCardProps {
 const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
   const [showVideoModal, setShowVideoModal] = useState(false);
 
-  // Helper para convertir urls normales de youtube a formato embed (iframe)
+  // Helper súper robusto para aislar el ID de YouTube
   const getEmbedUrl = (url: string) => {
     if (!url) return '';
-    let embedUrl = url;
-    if (url.includes('youtube.com/watch?v=')) {
-      embedUrl = url.replace('watch?v=', 'embed/').split('&')[0];
-    } else if (url.includes('youtu.be/')) {
-      embedUrl = url.replace('youtu.be/', 'youtube.com/embed/').split('?')[0];
-    }
-    return embedUrl;
+    try {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+      const videoId = (match && match[2].length === 11) ? match[2] : null;
+      
+      if (videoId) {
+        return `https://www.youtube.com/embed/${videoId}`;
+      }
+    } catch (e) {}
+    
+    return url; // Si no es youtube, devuelve la url original
   };
 
   const isYouTube = property.videoUrl?.includes('youtu') || false;
