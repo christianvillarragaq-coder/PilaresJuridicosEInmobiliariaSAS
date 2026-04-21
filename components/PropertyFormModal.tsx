@@ -16,6 +16,7 @@ const PropertyFormModal: React.FC<PropertyFormModalProps> = ({ onClose, onSucces
   const [area, setArea] = useState('');
   const [beds, setBeds] = useState(0);
   const [baths, setBaths] = useState(0);
+  const [garages, setGarages] = useState(0);
   const [description, setDescription] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
   
@@ -39,6 +40,7 @@ const PropertyFormModal: React.FC<PropertyFormModalProps> = ({ onClose, onSucces
         area,
         beds,
         baths,
+        garages,
         description,
         videoUrl,
         image: '' // Will be set in service
@@ -91,6 +93,10 @@ const PropertyFormModal: React.FC<PropertyFormModalProps> = ({ onClose, onSucces
             <div>
               <label className="block text-sm font-medium text-gray-700">Baños</label>
               <input type="number" required value={baths} onChange={e=>setBaths(Number(e.target.value))} className="w-full border p-2 rounded" min="0" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Garajes</label>
+              <input type="number" required value={garages} onChange={e=>setGarages(Number(e.target.value))} className="w-full border p-2 rounded" min="0" />
             </div>
           </div>
           

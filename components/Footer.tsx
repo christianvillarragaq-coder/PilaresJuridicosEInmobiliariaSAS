@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
         </div>
         <div className="space-y-4">
           <h3 className="text-[#a6894a] font-bold text-xs uppercase tracking-widest">Horarios</h3>
-          <p className="text-gray-400 text-xs italic">Lunes a Viernes: 8:00 AM - 6:00 PM</p>
+          <p className="text-gray-400 text-xs italic leading-relaxed">Lunes a sábado de 8 a 6 con cita previa y domingos en casos especiales.</p>
         </div>
       </div>
       <div className="text-center pt-8 text-[9px] text-gray-500 tracking-[0.3em] uppercase">

@@ -52,18 +52,22 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
           <h3 className="text-xl font-bold font-serif mb-2">{property.title}</h3>
           <p className="text-gray-500 text-sm mb-4">📍 {property.location}</p>
           
-          <div className="grid grid-cols-3 gap-2 mb-4 border-y py-4">
+          <div className="grid grid-cols-4 gap-1 mb-4 border-y py-4 text-xs">
             <div className="text-center">
-              <div className="text-gray-400 text-xs">Área</div>
-              <div className="font-bold">{property.area}</div>
+              <div className="text-gray-400">Área</div>
+              <div className="font-bold sm:text-sm">{property.area}</div>
             </div>
             <div className="text-center border-x">
-              <div className="text-gray-400 text-xs">Habitaciones</div>
-              <div className="font-bold">{property.beds}</div>
+              <div className="text-gray-400">Cuartos</div>
+              <div className="font-bold sm:text-sm">{property.beds}</div>
             </div>
             <div className="text-center">
-              <div className="text-gray-400 text-xs">Baños</div>
-              <div className="font-bold">{property.baths}</div>
+              <div className="text-gray-400">Baños</div>
+              <div className="font-bold sm:text-sm">{property.baths}</div>
+            </div>
+            <div className="text-center border-l">
+              <div className="text-gray-400">Garaje</div>
+              <div className="font-bold sm:text-sm">{property.garages || 0}</div>
             </div>
           </div>
 
@@ -74,7 +78,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
           )}
 
           <a 
-            href={`mailto:ventas@pilaresjuridicos.com?subject=Me interesa: ${encodeURIComponent(property.title)}`}
+            href={`mailto:pilaresjuridicoseinmobiliaria@gmail.com?subject=Me interesa: ${encodeURIComponent(property.title)}`}
             className="w-full bg-gray-900 text-white py-3 rounded-xl font-bold hover:bg-gold transition-colors block text-center"
           >
             Solicitar Información

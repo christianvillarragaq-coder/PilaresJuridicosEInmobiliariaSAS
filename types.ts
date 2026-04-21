@@ -19,6 +19,7 @@ export interface Property {
   image: string;
   beds: number;
   baths: number;
+  garages?: number;
   area: string;
   description?: string;
   imageUrls?: string[];

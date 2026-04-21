@@ -60,8 +60,8 @@ const RealEstateView: React.FC = () => {
           <img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&q=80&w=1200" className="w-full h-full object-cover" />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-serif mb-6">Tu Hogar Ideal</h1>
-          <p className="text-xl text-gray-300 font-light mb-10 max-w-2xl mx-auto">Gestión exclusiva de propiedades en las mejores zonas del país.</p>
+          <h1 className="text-5xl md:text-7xl font-serif mb-6">La propiedad ideal para cumplir tus sueños</h1>
+          <p className="text-xl text-gray-300 font-light mb-10 max-w-2xl mx-auto">Gestión exclusiva de propiedades en Bogotá y Cundinamarca.</p>
           <div className="flex justify-center gap-4 flex-wrap">
             <button onClick={() => document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth' })} className="bg-white text-black px-10 py-4 rounded-full font-bold hover:bg-gray-200 transition-all">VER CATÁLOGO</button>
             <button className="bg-transparent border border-white px-10 py-4 rounded-full font-bold hover:bg-white/10 transition-all">CONSIGNAR MI BIEN</button>
