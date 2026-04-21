@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs, orderBy, query } from 'firebase/firestore';
+import { collection, addDoc, getDocs, orderBy, query, deleteDoc, doc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from './firebaseConfig';
 import { Property } from '../types';
@@ -45,5 +45,14 @@ export const propertyService = {
       id: doc.id,
       ...doc.data()
     } as Property));
+  },
+
+  async deleteProperty(id: string): Promise<void> {
+    try {
+      await deleteDoc(doc(db, 'properties', id));
+    } catch (e) {
+      console.error("Error deleting document: ", e);
+      throw e;
+    }
   }
 };

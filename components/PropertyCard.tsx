@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Property } from '../types';
+import { propertyService } from '../services/propertyService';
 
 interface PropertyCardProps {
   property: Property;
+  isAdmin?: boolean;
+  onDelete?: () => void;
 }
 
-const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
+const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete }) => {
   const [showVideoModal, setShowVideoModal] = useState(false);
 
   // Helper súper robusto para aislar el ID de YouTube
@@ -26,6 +29,18 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
 
   const isYouTube = property.videoUrl?.includes('youtu') || false;
 
+  const handleDelete = async () => {
+    if (window.confirm('¿Estás seguro de que deseas eliminar este inmueble? Esta acción no se puede deshacer.')) {
+      try {
+        await propertyService.deleteProperty(property.id);
+        if (onDelete) onDelete();
+      } catch (error) {
+        console.error("Error al eliminar", error);
+        alert("Hubo un error al eliminar el inmueble.");
+      }
+    }
+  };
+
   return (
     <>
       <div className="bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-xl transition-shadow w-full">
@@ -44,6 +59,15 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
               className="absolute bottom-4 right-4 bg-black/70 text-white p-2 rounded-full backdrop-blur-sm hover:bg-gold transition-colors hover:scale-110 flex items-center justify-center cursor-pointer"
             >
               ▶ Ver Video
+            </button>
+          )}
+          {isAdmin && (
+            <button 
+              onClick={handleDelete}
+              className="absolute top-4 left-4 bg-red-600/90 text-white p-2 rounded-full backdrop-blur-sm hover:bg-red-700 transition-colors shadow-lg z-20"
+              title="Eliminar inmueble"
+            >
+              🗑️
             </button>
           )}
         </div>
