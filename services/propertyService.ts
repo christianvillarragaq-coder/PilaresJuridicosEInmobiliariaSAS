@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs, orderBy, query, deleteDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, getDocs, orderBy, query, deleteDoc, doc, updateDoc, where } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from './firebaseConfig';
 import { Property } from '../types';
@@ -27,6 +27,7 @@ export const propertyService = {
         imageUrls,
         image: imageUrls.length > 0 ? imageUrls[0] : propertyData.image || '',
         videoUrl: videoUrl,
+        approved: propertyData.approved !== undefined ? propertyData.approved : true,
         createdAt: new Date().toISOString()
       });
 
@@ -37,9 +38,14 @@ export const propertyService = {
     }
   },
 
-  async getProperties(): Promise<Property[]> {
+  async getProperties(onlyApproved: boolean = false): Promise<Property[]> {
     const propertiesCol = collection(db, 'properties');
-    const q = query(propertiesCol, orderBy('createdAt', 'desc'));
+    let q;
+    if (onlyApproved) {
+      q = query(propertiesCol, where('approved', '==', true), orderBy('createdAt', 'desc'));
+    } else {
+      q = query(propertiesCol, orderBy('createdAt', 'desc'));
+    }
     const propertySnapshot = await getDocs(q);
     return propertySnapshot.docs.map(doc => ({
       id: doc.id,
@@ -52,6 +58,16 @@ export const propertyService = {
       await deleteDoc(doc(db, 'properties', id));
     } catch (e) {
       console.error("Error deleting document: ", e);
+      throw e;
+    }
+  },
+
+  async approveProperty(id: string): Promise<void> {
+    try {
+      const docRef = doc(db, 'properties', id);
+      await updateDoc(docRef, { approved: true });
+    } catch (e) {
+      console.error("Error approving document: ", e);
       throw e;
     }
   }

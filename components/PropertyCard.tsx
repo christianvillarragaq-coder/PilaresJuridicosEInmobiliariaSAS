@@ -6,9 +6,10 @@ interface PropertyCardProps {
   property: Property;
   isAdmin?: boolean;
   onDelete?: () => void;
+  onApprove?: () => void;
 }
 
-const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete }) => {
+const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete, onApprove }) => {
   const [showVideoModal, setShowVideoModal] = useState(false);
 
   // Helper súper robusto para aislar el ID de YouTube
@@ -43,8 +44,13 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete
 
   return (
     <>
-      <div className="bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-xl transition-shadow w-full">
+      <div className={`bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-xl transition-shadow w-full ${!property.approved && isAdmin ? 'ring-2 ring-yellow-400' : ''}`}>
         <div className="relative h-64 overflow-hidden group">
+          {isAdmin && !property.approved && (
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 bg-yellow-400 text-black px-4 py-1 rounded-full font-bold text-xs shadow-lg animate-pulse">
+              PENDIENTE DE APROBACIÓN
+            </div>
+          )}
           <img 
             src={property.image} 
             alt={property.title} 
@@ -96,17 +102,32 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete
           </div>
 
           {property.description && (
-            <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+            <p className="text-sm text-gray-600 mb-4 line-clamp-2">
               {property.description}
             </p>
           )}
 
-          <a 
-            href={`mailto:pilaresjuridicoseinmobiliaria@gmail.com?subject=Me interesa: ${encodeURIComponent(property.title)}`}
-            className="w-full bg-gray-900 text-white py-3 rounded-xl font-bold hover:bg-gold transition-colors block text-center"
-          >
-            Solicitar Información
-          </a>
+          <div className="flex gap-2">
+            {!property.approved && isAdmin && (
+              <button 
+                onClick={async () => {
+                  if (onApprove) {
+                    await propertyService.approveProperty(property.id);
+                    onApprove();
+                  }
+                }}
+                className="flex-grow bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition-colors"
+              >
+                APROBAR ✅
+              </button>
+            )}
+            <a 
+              href={`mailto:pilaresjuridicoseinmobiliaria@gmail.com?subject=Me interesa: ${encodeURIComponent(property.title)}`}
+              className={`${!property.approved && isAdmin ? 'w-auto px-4' : 'w-full'} bg-gray-900 text-white py-3 rounded-xl font-bold hover:bg-gold transition-colors block text-center`}
+            >
+              {!property.approved && isAdmin ? '📧' : 'Solicitar Información'}
+            </a>
+          </div>
         </div>
       </div>
 

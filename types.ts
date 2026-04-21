@@ -24,6 +24,7 @@ export interface Property {
   description?: string;
   imageUrls?: string[];
   videoUrl?: string;
+  approved?: boolean;
 }
 
 export interface ChatMessage {

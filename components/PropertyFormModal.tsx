@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
 import { propertyService } from '../services/propertyService';
+import emailjs from 'emailjs-com';
 
 interface PropertyFormModalProps {
   onClose: () => void;
   onSuccess: () => void;
+  isConsignment?: boolean;
 }
 
-const PropertyFormModal: React.FC<PropertyFormModalProps> = ({ onClose, onSuccess }) => {
+const PropertyFormModal: React.FC<PropertyFormModalProps> = ({ onClose, onSuccess, isConsignment = false }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
@@ -43,8 +44,28 @@ const PropertyFormModal: React.FC<PropertyFormModalProps> = ({ onClose, onSucces
         garages,
         description,
         videoUrl,
+        approved: !isConsignment,
         image: '' // Will be set in service
       }, Array.from(images), videoFile || undefined);
+
+      if (isConsignment) {
+        // Enviar notificación por correo
+        try {
+          await emailjs.send(
+            'service_default', // ID sugerido (el usuario puede cambiarlo)
+            'template_new_property', // ID sugerido
+            {
+              to_email: 'pilaresjuridicoseinmobiliaria@gmail.com',
+              property_title: title,
+              property_price: price,
+              property_location: location
+            },
+            'YOUR_PUBLIC_KEY' // Placeholder para la llave del usuario
+          );
+        } catch (mailErr) {
+          console.warn('No se pudo enviar el correo de notificación, pero el inmueble se guardó correctamente.', mailErr);
+        }
+      }
 
       setLoading(false);
       onSuccess();
@@ -64,7 +85,9 @@ const PropertyFormModal: React.FC<PropertyFormModalProps> = ({ onClose, onSucces
         >
           &times;
         </button>
-        <h2 className="text-2xl font-serif mb-6 text-gold">Agregar Nuevo Inmueble</h2>
+        <h2 className="text-2xl font-serif mb-6 text-gold">
+          {isConsignment ? 'Consignar mi Inmueble' : 'Agregar Nuevo Inmueble'}
+        </h2>
         
         {error && <div className="bg-red-100 text-red-600 p-3 rounded mb-4 text-sm">{error}</div>}
         

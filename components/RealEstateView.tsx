@@ -4,6 +4,7 @@ import { propertyService } from '../services/propertyService';
 import PropertyCard from './PropertyCard';
 import LoginModal from './LoginModal';
 import PropertyFormModal from './PropertyFormModal';
+import ConsignmentLoginModal from './ConsignmentLoginModal';
 
 const RealEstateView: React.FC = () => {
   const [properties, setProperties] = useState<Property[]>([]);
@@ -12,11 +13,14 @@ const RealEstateView: React.FC = () => {
   
   const [showLogin, setShowLogin] = useState(false);
   const [showPropertyForm, setShowPropertyForm] = useState(false);
+  const [showConsignmentLogin, setShowConsignmentLogin] = useState(false);
+  const [isConsignmentFlow, setIsConsignmentFlow] = useState(false);
 
   const fetchProperties = async () => {
     setLoading(true);
     try {
-      const data = await propertyService.getProperties();
+      // Si es admin, ve todo. Si es usuario, solo aprobados.
+      const data = await propertyService.getProperties(!isAdmin);
       setProperties(data);
     } catch (e) {
       console.error("Error fetching properties", e);
@@ -25,9 +29,14 @@ const RealEstateView: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchProperties();
     const token = localStorage.getItem('admin_token');
-    if (token) setIsAdmin(true);
+    const adminActive = !!token;
+    setIsAdmin(adminActive);
+    
+    // Fetch properties once we know admin status
+    propertyService.getProperties(!adminActive)
+      .then(setProperties)
+      .finally(() => setLoading(false));
   }, []);
 
   const handleLogin = (token: string) => {
@@ -64,7 +73,12 @@ const RealEstateView: React.FC = () => {
           <p className="text-xl text-gray-300 font-light mb-10 max-w-2xl mx-auto">Gestión exclusiva de propiedades en Bogotá y Cundinamarca.</p>
           <div className="flex justify-center gap-4 flex-wrap">
             <button onClick={() => document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth' })} className="bg-white text-black px-10 py-4 rounded-full font-bold hover:bg-gray-200 transition-all">VER CATÁLOGO</button>
-            <button className="bg-transparent border border-white px-10 py-4 rounded-full font-bold hover:bg-white/10 transition-all">CONSIGNAR MI BIEN</button>
+            <button 
+              onClick={() => setShowConsignmentLogin(true)} 
+              className="bg-transparent border border-white px-10 py-4 rounded-full font-bold hover:bg-white/10 transition-all"
+            >
+              CONSIGNAR MI BIEN
+            </button>
           </div>
         </div>
       </section>
@@ -93,6 +107,7 @@ const RealEstateView: React.FC = () => {
                   property={prop} 
                   isAdmin={isAdmin} 
                   onDelete={fetchProperties} 
+                  onApprove={fetchProperties}
                 />
               ))}
             </div>
@@ -124,12 +139,30 @@ const RealEstateView: React.FC = () => {
 
       {/* Modals */}
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} onLogin={handleLogin} />}
+      {showConsignmentLogin && (
+        <ConsignmentLoginModal 
+          onClose={() => setShowConsignmentLogin(false)} 
+          onSuccess={() => {
+            setShowConsignmentLogin(false);
+            setIsConsignmentFlow(true);
+            setShowPropertyForm(true);
+          }} 
+        />
+      )}
       {showPropertyForm && (
         <PropertyFormModal 
-          onClose={() => setShowPropertyForm(false)} 
+          isConsignment={isConsignmentFlow}
+          onClose={() => {
+            setShowPropertyForm(false);
+            setIsConsignmentFlow(false);
+          }} 
           onSuccess={() => {
             setShowPropertyForm(false);
+            setIsConsignmentFlow(false);
             fetchProperties(); // Refresh the catalogue
+            if (!isAdmin) {
+              alert('¡Gracias! Su inmueble ha sido consignado exitosamente y aparecerá en el catálogo tras la aprobación del administrador.');
+            }
           }} 
         />
       )}
