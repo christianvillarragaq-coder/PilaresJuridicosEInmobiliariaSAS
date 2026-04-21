@@ -6,11 +6,8 @@ interface LogoProps {
 }
 
 const Logo: React.FC<LogoProps> = ({ className = "h-12", light = false }) => {
-  // En Vite, los archivos de /public se sirven en la raíz del sitio.
-  // En GitHub Pages, necesitamos considerar el subdirectorio /PilaresJuridicosEInmobiliariaSAS/
-  
-  // Usamos una ruta relativa simple que funcione tanto en local como en producción
-  const logoPath = "logo_v2.png";
+  // Definimos la ruta según si queremos el logo normal o el de fondo oscuro (light text)
+  const logoPath = light ? "logo_footer.jpg" : "logo_v2.png";
 
   return (
     <div className={`flex items-center ${className}`}>
@@ -19,10 +16,10 @@ const Logo: React.FC<LogoProps> = ({ className = "h-12", light = false }) => {
         alt="Pilares Jurídicos e Inmobiliaria SAS" 
         className="h-full w-auto object-contain"
         onError={(e) => {
-          // Fallback robusto para GitHub Pages si la ruta anterior falla
           const target = e.target as HTMLImageElement;
+          // Fallback para GitHub Pages considerando el subdirectorio
           if (target.src.indexOf('PilaresJuridicosEInmobiliariaSAS') === -1) {
-             target.src = '/PilaresJuridicosEInmobiliariaSAS/logo_v2.png';
+             target.src = `/PilaresJuridicosEInmobiliariaSAS/${logoPath}`;
           }
         }}
       />

@@ -8,9 +8,9 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-[#0f1a2e] text-white py-16 px-4">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-white/10 pb-12">
-        <div className="space-y-6">
-          <Logo className="h-12" light />
-          <p className="text-gray-400 text-xs leading-relaxed max-w-xs">Especialistas en Derecho de Familia, Inmobiliario y Notarial. Excelencia jurídica y compromiso inmobiliario en Bogotá.</p>
+        <div>
+          <Logo className="h-16 mb-4" light={true} />
+          <p className="text-gray-400 text-sm leading-relaxed">Asesoría jurídica y gestión inmobiliaria integral en la ciudad de Bogotá. Profesionalismo y confianza a su servicio.</p>
         </div>
         <div className="space-y-4">
           <h3 className="text-[#a6894a] font-bold text-xs uppercase tracking-widest">Contacto</h3>
