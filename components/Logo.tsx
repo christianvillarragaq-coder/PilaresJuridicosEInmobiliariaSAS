@@ -6,8 +6,8 @@ interface LogoProps {
 }
 
 const Logo: React.FC<LogoProps> = ({ className = "h-12", light = false }) => {
-  // Definimos la ruta según si queremos el logo normal o el de fondo oscuro (light text)
-  const logoPath = light ? "logo_footer.jpg" : "logo_v2.png";
+  // Usamos el logo transparente principal
+  const logoPath = "logo_principal.png";
 
   return (
     <div className={`flex items-center ${className}`}>
@@ -15,6 +15,10 @@ const Logo: React.FC<LogoProps> = ({ className = "h-12", light = false }) => {
         src={logoPath} 
         alt="Pilares Jurídicos e Inmobiliaria SAS" 
         className="h-full w-auto object-contain"
+        style={{ 
+          // Si es para fondo oscuro (light=true), invertimos los colores para que se vea blanco
+          filter: light ? 'brightness(0) invert(1)' : 'none' 
+        }}
         onError={(e) => {
           const target = e.target as HTMLImageElement;
           // Fallback para GitHub Pages considerando el subdirectorio
