@@ -40,17 +40,20 @@ export const propertyService = {
 
   async getProperties(onlyApproved: boolean = false): Promise<Property[]> {
     const propertiesCol = collection(db, 'properties');
-    let q;
-    if (onlyApproved) {
-      q = query(propertiesCol, where('approved', '==', true), orderBy('createdAt', 'desc'));
-    } else {
-      q = query(propertiesCol, orderBy('createdAt', 'desc'));
-    }
+    const q = query(propertiesCol, orderBy('createdAt', 'desc'));
     const propertySnapshot = await getDocs(q);
-    return propertySnapshot.docs.map(doc => ({
+    
+    const allProperties = propertySnapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data()
     } as Property));
+
+    if (onlyApproved) {
+      // Retornar solo los aprobados explícitamente O aquellos que no tengan el campo (inmuebles antiguos)
+      return allProperties.filter(p => p.approved !== false);
+    }
+
+    return allProperties;
   },
 
   async deleteProperty(id: string): Promise<void> {
