@@ -28,6 +28,21 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete
     return url; // Si no es youtube, devuelve la url original
   };
   
+  // Helper para formatear precio a COP
+  const formatPrice = (price: string) => {
+    if (!price) return '';
+    // Eliminar caracteres no numéricos para limpiar si ya venía con formato
+    const numericValue = price.replace(/[^0-9]/g, '');
+    if (!numericValue) return price; // Si no hay números (ej. "A convenir"), devolver original
+    
+    return new Intl.NumberFormat('es-CO', {
+      style: 'currency',
+      currency: 'COP',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(parseInt(numericValue));
+  };
+  
   // Si no tiene código (inmuebles antiguos), generamos uno determinista basado en el ID
   const displayCode = property.itemCode || `PJ-${property.id.slice(0, 4).toUpperCase()}`;
 
@@ -61,7 +76,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete
           />
           <div className="absolute top-4 right-4 flex flex-col items-end gap-2">
             <div className="bg-gold text-white px-3 py-1 rounded-full text-sm font-bold shadow">
-              {property.price}
+              {formatPrice(property.price)}
             </div>
             <div className="bg-white/90 backdrop-blur-sm text-[#1a2e4c] px-2 py-0.5 rounded text-[10px] font-bold shadow border border-gray-100 uppercase tracking-tighter">
               Cód: {displayCode}

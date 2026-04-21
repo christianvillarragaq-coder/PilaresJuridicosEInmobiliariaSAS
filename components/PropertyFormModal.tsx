@@ -27,6 +27,23 @@ const PropertyFormModal: React.FC<PropertyFormModalProps> = ({ onClose, onSucces
   const [acceptedHabeas, setAcceptedHabeas] = useState(false);
   const [showHabeasModal, setShowHabeasModal] = useState(false);
 
+  const formatPriceInput = (value: string) => {
+    // Solo permitir números
+    const numericValue = value.replace(/[^0-9]/g, '');
+    if (!numericValue) return '';
+    return new Intl.NumberFormat('es-CO', {
+      style: 'currency',
+      currency: 'COP',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(parseInt(numericValue));
+  };
+
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPriceInput(e.target.value);
+    setPrice(formatted);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -96,7 +113,15 @@ const PropertyFormModal: React.FC<PropertyFormModalProps> = ({ onClose, onSucces
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Precio</label>
-              <input type="text" required value={price} onChange={e=>setPrice(e.target.value)} className="w-full border p-2 rounded" placeholder="Ej. $500.000.000 COP" />
+              <input 
+                type="text" 
+                required 
+                value={price} 
+                onChange={handlePriceChange} 
+                className="w-full border p-2 rounded focus:ring-2 focus:ring-gold outline-none" 
+                placeholder="Ej. 800000" 
+              />
+              <p className="text-[10px] text-gray-400 mt-1">Se formateará automáticamente como $800.000</p>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Ubicación</label>
