@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { propertyService } from '../services/propertyService';
-import emailjs from '@emailjs/browser';
 
 interface PropertyFormModalProps {
   onClose: () => void;
@@ -50,22 +49,8 @@ const PropertyFormModal: React.FC<PropertyFormModalProps> = ({ onClose, onSucces
       }, Array.from(images), videoFile || undefined);
 
       if (isConsignment) {
-        // Enviar notificación por correo
-        try {
-          await emailjs.send(
-            'service_default', // ID sugerido (el usuario puede cambiarlo)
-            'template_new_property', // ID sugerido
-            {
-              to_email: 'pilaresjuridicoseinmobiliaria@gmail.com',
-              property_title: title,
-              property_price: price,
-              property_location: location
-            },
-            'YOUR_PUBLIC_KEY' // Placeholder para la llave del usuario
-          );
-        } catch (mailErr) {
-          console.warn('No se pudo enviar el correo de notificación, pero el inmueble se guardó correctamente.', mailErr);
-        }
+        // Notificación desactivada temporalmente para debug
+        console.log('Inmueble consignado, pendiente de notificacion.');
       }
 
       setLoading(false);
