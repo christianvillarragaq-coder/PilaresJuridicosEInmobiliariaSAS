@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
           <h3 className="text-[#a6894a] font-bold text-xs uppercase tracking-widest">Contacto</h3>
           <p className="text-gray-400 text-xs">📍 Cra 10 No 16 39 oficina 1605, Bogotá.</p>
           <p className="text-gray-400 text-xs">📞 +57 310 613 5299</p>
-          <p className="text-gray-400 text-xs">✉️ juridicayhwh@gmail.com</p>
+          <p className="text-gray-400 text-xs break-all">✉️ pilaresjuridicoseinmobiliaria@gmail.com</p>
         </div>
         <div className="space-y-4">
           <h3 className="text-[#a6894a] font-bold text-xs uppercase tracking-widest">Horarios</h3>
