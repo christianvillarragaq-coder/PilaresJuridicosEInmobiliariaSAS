@@ -1,5 +1,6 @@
+import React, { useState } from 'react';
 import { propertyService } from '../services/propertyService';
-import emailjs from 'emailjs-com';
+import emailjs from '@emailjs/browser';
 
 interface PropertyFormModalProps {
   onClose: () => void;
