@@ -4,6 +4,10 @@ import { db, storage } from './firebaseConfig';
 import { Property } from '../types';
 
 export const propertyService = {
+  generateItemCode(): string {
+    return `PJ-${Math.random().toString(36).substr(2, 4).toUpperCase()}`;
+  },
+
   async addProperty(propertyData: Omit<Property, 'id'>, images: File[], videoFile?: File): Promise<string> {
     try {
       const imageUrls: string[] = [];
@@ -28,6 +32,7 @@ export const propertyService = {
         image: imageUrls.length > 0 ? imageUrls[0] : propertyData.image || '',
         videoUrl: videoUrl,
         approved: propertyData.approved !== undefined ? propertyData.approved : true,
+        itemCode: propertyData.itemCode || this.generateItemCode(),
         createdAt: new Date().toISOString()
       });
 

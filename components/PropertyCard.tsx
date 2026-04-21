@@ -27,6 +27,9 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete
     
     return url; // Si no es youtube, devuelve la url original
   };
+  
+  // Si no tiene código (inmuebles antiguos), generamos uno determinista basado en el ID
+  const displayCode = property.itemCode || `PJ-${property.id.slice(0, 4).toUpperCase()}`;
 
   const isYouTube = property.videoUrl?.includes('youtu') || false;
 
@@ -56,8 +59,13 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete
             alt={property.title} 
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
           />
-          <div className="absolute top-4 right-4 bg-gold text-white px-3 py-1 rounded-full text-sm font-bold shadow">
-            {property.price}
+          <div className="absolute top-4 right-4 flex flex-col items-end gap-2">
+            <div className="bg-gold text-white px-3 py-1 rounded-full text-sm font-bold shadow">
+              {property.price}
+            </div>
+            <div className="bg-white/90 backdrop-blur-sm text-[#1a2e4c] px-2 py-0.5 rounded text-[10px] font-bold shadow border border-gray-100 uppercase tracking-tighter">
+              Cód: {displayCode}
+            </div>
           </div>
           {property.videoUrl && (
             <button 
@@ -122,7 +130,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete
               </button>
             )}
             <a 
-              href={`mailto:pilaresjuridicoseinmobiliaria@gmail.com?subject=Me interesa: ${encodeURIComponent(property.title)}`}
+              href={`mailto:pilaresjuridicoseinmobiliaria@gmail.com?subject=Me interesa el inmueble ${encodeURIComponent(property.title)} (Cód: ${displayCode})&body=Cordial saludo, escribo porque me interesa el inmueble ${encodeURIComponent(property.title)} con código ${displayCode}. Por favor contáctenme para brindar más información.`}
               className={`${!property.approved && isAdmin ? 'w-auto px-4' : 'w-full'} bg-gray-900 text-white py-3 rounded-xl font-bold hover:bg-gold transition-colors block text-center`}
             >
               {!property.approved && isAdmin ? '📧' : 'Solicitar Información'}

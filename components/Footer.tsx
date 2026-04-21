@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from './Logo';
+import HabeasDataModal from './HabeasDataModal';
 
 const Footer: React.FC = () => {
+  const [showHabeas, setShowHabeas] = useState(false);
+  
   return (
     <footer className="bg-[#0f1a2e] text-white py-16 px-4">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-white/10 pb-12">
@@ -20,9 +23,16 @@ const Footer: React.FC = () => {
           <p className="text-gray-400 text-xs italic leading-relaxed">Lunes a sábado de 8 a 6 con cita previa y domingos en casos especiales.</p>
         </div>
       </div>
-      <div className="text-center pt-8 text-[9px] text-gray-500 tracking-[0.3em] uppercase">
-        © {new Date().getFullYear()} Pilares Jurídicos e Inmobiliaria SAS
+      <div className="text-center pt-8 text-[9px] text-gray-500 tracking-[0.3em] uppercase flex flex-col items-center gap-2">
+        <span>© {new Date().getFullYear()} Pilares Jurídicos e Inmobiliaria SAS</span>
+        <button 
+          onClick={() => setShowHabeas(true)} 
+          className="hover:text-[#a6894a] transition-colors underline cursor-pointer"
+        >
+          Protección de Datos (Habeas Data)
+        </button>
       </div>
+      {showHabeas && <HabeasDataModal onClose={() => setShowHabeas(false)} />}
     </footer>
   );
 };
