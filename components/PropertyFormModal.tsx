@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { propertyService } from '../services/propertyService';
+import HabeasDataModal from './HabeasDataModal';
 
 interface PropertyFormModalProps {
   onClose: () => void;
@@ -23,6 +24,8 @@ const PropertyFormModal: React.FC<PropertyFormModalProps> = ({ onClose, onSucces
   
   const [images, setImages] = useState<FileList | null>(null);
   const [videoFile, setVideoFile] = useState<File | null>(null);
+  const [acceptedHabeas, setAcceptedHabeas] = useState(false);
+  const [showHabeasModal, setShowHabeasModal] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,6 +33,14 @@ const PropertyFormModal: React.FC<PropertyFormModalProps> = ({ onClose, onSucces
     setError('');
 
     try {
+      if (!isConsignment && !acceptedHabeas) {
+         // Si es admin tal vez no es obligatorio, pero el usuario pidió "el formulario de registro"
+      }
+      
+      if (!acceptedHabeas) {
+        throw new Error('Debes aceptar las políticas de tratamiento de datos (Habeas Data) para continuar.');
+      }
+
       if (!images || images.length === 0) {
         throw new Error('Debes subir al menos una imagen');
       }
@@ -130,16 +141,32 @@ const PropertyFormModal: React.FC<PropertyFormModalProps> = ({ onClose, onSucces
               </div>
             </div>
           </div>
+ 
+          <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 flex items-start gap-3">
+            <input 
+              type="checkbox" 
+              id="habeasDataForm"
+              required 
+              checked={acceptedHabeas}
+              onChange={(e) => setAcceptedHabeas(e.target.checked)}
+              className="mt-1 w-5 h-5 text-gold border-gray-300 rounded focus:ring-gold"
+            />
+            <label htmlFor="habeasDataForm" className="text-xs text-gray-600 leading-tight">
+              Acepto las <button type="button" onClick={() => setShowHabeasModal(true)} className="text-[#a6894a] underline font-bold">políticas de tratamiento de datos</button> personales según la ley de Habeas Data vigente.
+            </label>
+          </div>
 
           <button 
             type="submit" 
-            disabled={loading}
-            className={`w-full text-white font-bold py-3 rounded transition-colors ${loading ? 'bg-gray-400' : 'bg-[#d4af37] hover:bg-yellow-600'}`}
+            disabled={loading || !acceptedHabeas}
+            className={`w-full text-white font-bold py-3 rounded transition-colors ${loading || !acceptedHabeas ? 'bg-gray-400' : 'bg-[#d4af37] hover:bg-yellow-600'}`}
           >
             {loading ? 'Subiendo Inmueble y Archivos...' : 'Guardar Inmueble'}
           </button>
         </form>
       </div>
+
+      {showHabeasModal && <HabeasDataModal onClose={() => setShowHabeasModal(false)} />}
     </div>
   );
 };
