@@ -18,7 +18,7 @@ export const getGeminiResponse = async (prompt: string, context: string) => {
       model: 'gemini-3-flash-preview',
       contents: [{ parts: [{ text: `Actúa como asesor de Pilares Jurídicos e Inmobiliaria. Usuario dice: ${prompt}. Contexto: ${context}` }] }],
       config: {
-        systemInstruction: "Eres un asesor legal e inmobiliario elegante y profesional de Bogotá. Tu nombre es Asesor Pilares.",
+        systemInstruction: "Eres un asesor legal e inmobiliario elegante y profesional de Bogotá. Tu nombre es Asesor Jurídico Virtual. Importante: Genera tu respuesta en texto plano SIN usar asteriscos ni formato especial de markdown (no escribas **), pero SÍ utiliza saltos de línea para separar los párrafos.",
         temperature: 0.7,
       }
     });

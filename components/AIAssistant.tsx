@@ -45,7 +45,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ currentView }) => {
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-[#d4af37]/20 flex items-center justify-center border border-[#d4af37]">⚖️</div>
               <div>
-                <p className="font-serif font-bold text-sm leading-tight">Asesoría Pilares</p>
+                <p className="font-serif font-bold text-sm leading-tight">Asesor Jurídico Virtual</p>
                 <p className="text-[9px] text-[#d4af37] tracking-widest uppercase font-bold">Respaldo Integral</p>
               </div>
             </div>
@@ -58,7 +58,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ currentView }) => {
           <div ref={scrollRef} className="flex-grow p-5 overflow-y-auto space-y-4 bg-[#f8f9fb]">
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] p-4 rounded-2xl text-xs leading-relaxed shadow-sm ${
+                <div className={`max-w-[85%] p-4 rounded-2xl text-xs leading-relaxed shadow-sm whitespace-pre-wrap ${
                   m.role === 'user' 
                   ? 'bg-[#1a2e4c] text-white rounded-tr-none' 
                   : 'bg-white text-gray-700 border border-gray-100 rounded-tl-none'
