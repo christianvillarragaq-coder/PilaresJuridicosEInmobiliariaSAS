@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import { Property } from '../types';
 import { propertyService } from '../services/propertyService';
+import InquiryModal from './InquiryModal';
 
 interface PropertyCardProps {
   property: Property;
@@ -11,6 +11,7 @@ interface PropertyCardProps {
 
 const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete, onApprove }) => {
   const [showVideoModal, setShowVideoModal] = useState(false);
+  const [showInquiryModal, setShowInquiryModal] = useState(false);
 
   // Helper súper robusto para aislar el ID de YouTube
   const getEmbedUrl = (url: string) => {
@@ -144,15 +145,23 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete
                 APROBAR ✅
               </button>
             )}
-            <a 
-              href={`mailto:pilaresjuridicoseinmobiliaria@gmail.com?subject=Me interesa el inmueble ${encodeURIComponent(property.title)} (Cód: ${displayCode})&body=Cordial saludo, escribo porque me interesa el inmueble ${encodeURIComponent(property.title)} con código ${displayCode}. Por favor contáctenme para brindar más información.`}
-              className={`${!property.approved && isAdmin ? 'w-auto px-4' : 'w-full'} bg-gray-900 text-white py-3 rounded-xl font-bold hover:bg-gold transition-colors block text-center`}
-            >
-              {!property.approved && isAdmin ? '📧' : 'Solicitar Información'}
-            </a>
+            <button 
+                onClick={() => setShowInquiryModal(true)}
+                className={`${!property.approved && isAdmin ? 'w-auto px-4' : 'w-full'} bg-gray-900 text-white py-3 rounded-xl font-bold hover:bg-gold transition-colors block text-center`}
+              >
+                {!property.approved && isAdmin ? '📧' : 'Solicitar Información'}
+              </button>
           </div>
         </div>
       </div>
+
+      {showInquiryModal && (
+        <InquiryModal 
+          onClose={() => setShowInquiryModal(false)}
+          propertyCode={displayCode}
+          propertyTitle={property.title}
+        />
+      )}
 
       {/* Video Modal (Embed) */}
       {showVideoModal && property.videoUrl && (
