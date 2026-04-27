@@ -52,10 +52,7 @@ const RealEstateView: React.FC = () => {
 
   return (
     <div className="animate-fadeIn">
-      {/* Debug Banner */}
-      <div className="bg-red-500 text-white p-2 text-center text-xs font-bold">
-        REAL ESTATE VIEW ACTIVE - Loading: {String(loading)} - Props: {properties.length}
-      </div>
+
       {/* Admin Bar */}
       <div className="bg-gray-100 text-right px-4 py-2 border-b flex justify-end gap-4">
         {isAdmin ? (
