@@ -1,4 +1,4 @@
-import emailjs from 'emailjs-com';
+import emailjs from '@emailjs/browser';
 
 // Configuración de EmailJS
 // El usuario deberá proporcionar estas llaves desde su panel de EmailJS

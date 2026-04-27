@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { Property } from '../types';
 import { propertyService } from '../services/propertyService';
 import InquiryModal from './InquiryModal';
@@ -30,22 +31,27 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete
   };
   
   // Helper para formatear precio a COP
-  const formatPrice = (price: string) => {
-    if (!price) return '';
-    // Eliminar caracteres no numéricos para limpiar si ya venía con formato
-    const numericValue = price.replace(/[^0-9]/g, '');
-    if (!numericValue) return price; // Si no hay números (ej. "A convenir"), devolver original
-    
-    return new Intl.NumberFormat('es-CO', {
-      style: 'currency',
-      currency: 'COP',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(parseInt(numericValue));
+  const formatPrice = (price: any) => {
+    try {
+      if (price === null || price === undefined) return 'Consultar precio';
+      const priceStr = String(price);
+      // Eliminar caracteres no numéricos para limpiar si ya venía con formato
+      const numericValue = priceStr.replace(/[^0-9]/g, '');
+      if (!numericValue) return priceStr || 'Consultar precio'; 
+      
+      return new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }).format(parseInt(numericValue));
+    } catch (e) {
+      return String(price);
+    }
   };
   
   // Si no tiene código (inmuebles antiguos), generamos uno determinista basado en el ID
-  const displayCode = property.itemCode || `PJ-${property.id.slice(0, 4).toUpperCase()}`;
+  const displayCode = property.itemCode || `PJ-${(property.id || 'TEMP').slice(0, 4).toUpperCase()}`;
 
   const isYouTube = property.videoUrl?.includes('youtu') || false;
 
