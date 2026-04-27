@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ViewMode } from './types';
 import LandingView from './components/LandingView';
 import LegalView from './components/LegalView';
@@ -8,10 +8,10 @@ import Footer from './components/Footer';
 import AIAssistant from './components/AIAssistant';
 
 const App: React.FC = () => {
-  const [view, setView] = React.useState<ViewMode>(ViewMode.HOME);
-  const [fatalError, setFatalError] = React.useState<string | null>(null);
+  const [view, setView] = useState<ViewMode>(ViewMode.HOME);
+  const [fatalError, setFatalError] = useState<string | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleError = (event: ErrorEvent) => {
       setFatalError(`Error Global: ${event.message} en ${event.filename}:${event.lineno}`);
     };
@@ -19,7 +19,7 @@ const App: React.FC = () => {
     return () => window.removeEventListener('error', handleError);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [view]);
 

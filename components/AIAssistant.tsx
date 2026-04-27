@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { getGeminiResponse } from '../services/geminiService';
 import { ChatMessage, ViewMode } from '../types';
 
@@ -7,16 +7,16 @@ interface AIAssistantProps {
 }
 
 const AIAssistant: React.FC<AIAssistantProps> = ({ currentView }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [messages, setMessages] = React.useState<ChatMessage[]>([{ 
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState<ChatMessage[]>([{ 
     role: 'model', 
     text: 'Bienvenido a Pilares Jurídicos e Inmobiliaria. Soy su asesor virtual. ¿En qué área puedo asistirle hoy?' 
   }]);
-  const [input, setInput] = React.useState('');
-  const [loading, setLoading] = React.useState(false);
-  const scrollRef = React.useRef<HTMLDivElement>(null);
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => { scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight); }, [messages]);
+  useEffect(() => { scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight); }, [messages]);
 
   const send = async () => {
     if (!input.trim() || loading) return;

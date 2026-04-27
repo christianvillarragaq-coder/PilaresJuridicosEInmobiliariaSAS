@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Property } from '../types';
 import { propertyService } from '../services/propertyService';
 import InquiryModal from './InquiryModal';
@@ -11,8 +11,8 @@ interface PropertyCardProps {
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete, onApprove }) => {
-  const [showVideoModal, setShowVideoModal] = React.useState(false);
-  const [showInquiryModal, setShowInquiryModal] = React.useState(false);
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [showInquiryModal, setShowInquiryModal] = useState(false);
 
   // Helper súper robusto para aislar el ID de YouTube
   const getEmbedUrl = (url: string) => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Property } from '../types';
 import { propertyService } from '../services/propertyService';
 import PropertyCard from './PropertyCard';
@@ -7,14 +7,14 @@ import PropertyFormModal from './PropertyFormModal';
 import ConsignmentLoginModal from './ConsignmentLoginModal';
 
 const RealEstateView: React.FC = () => {
-  const [properties, setProperties] = React.useState<Property[]>([]);
-  const [loading, setLoading] = React.useState(true);
-  const [isAdmin, setIsAdmin] = React.useState(false);
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   
-  const [showLogin, setShowLogin] = React.useState(false);
-  const [showPropertyForm, setShowPropertyForm] = React.useState(false);
-  const [showConsignmentLogin, setShowConsignmentLogin] = React.useState(false);
-  const [isConsignmentFlow, setIsConsignmentFlow] = React.useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showPropertyForm, setShowPropertyForm] = useState(false);
+  const [showConsignmentLogin, setShowConsignmentLogin] = useState(false);
+  const [isConsignmentFlow, setIsConsignmentFlow] = useState(false);
 
   const fetchProperties = async () => {
     setLoading(true);
@@ -28,7 +28,7 @@ const RealEstateView: React.FC = () => {
     setLoading(false);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const token = localStorage.getItem('admin_token');
     const adminActive = !!token;
     setIsAdmin(adminActive);
