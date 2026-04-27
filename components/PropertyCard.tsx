@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Property } from '../types';
 import { propertyService } from '../services/propertyService';
 import InquiryModal from './InquiryModal';

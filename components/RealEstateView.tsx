@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Property } from '../types';
 import { propertyService } from '../services/propertyService';
 import PropertyCard from './PropertyCard';
@@ -28,7 +28,7 @@ const RealEstateView: React.FC = () => {
     setLoading(false);
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     const token = localStorage.getItem('admin_token');
     const adminActive = !!token;
     setIsAdmin(adminActive);

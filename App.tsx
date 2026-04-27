@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { ViewMode } from './types';
 import LandingView from './components/LandingView';
 import LegalView from './components/LegalView';
@@ -11,7 +11,7 @@ const App: React.FC = () => {
   const [view, setView] = React.useState<ViewMode>(ViewMode.HOME);
   const [fatalError, setFatalError] = React.useState<string | null>(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const handleError = (event: ErrorEvent) => {
       setFatalError(`Error Global: ${event.message} en ${event.filename}:${event.lineno}`);
     };
@@ -19,7 +19,7 @@ const App: React.FC = () => {
     return () => window.removeEventListener('error', handleError);
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [view]);
 
