@@ -11,8 +11,8 @@ interface PropertyCardProps {
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete, onApprove }) => {
-  const [showVideoModal, setShowVideoModal] = useState(false);
-  const [showInquiryModal, setShowInquiryModal] = useState(false);
+  const [showVideoModal, setShowVideoModal] = React.useState(false);
+  const [showInquiryModal, setShowInquiryModal] = React.useState(false);
 
   // Helper súper robusto para aislar el ID de YouTube
   const getEmbedUrl = (url: string) => {

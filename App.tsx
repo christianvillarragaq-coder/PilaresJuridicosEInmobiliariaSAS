@@ -8,8 +8,8 @@ import Footer from './components/Footer';
 import AIAssistant from './components/AIAssistant';
 
 const App: React.FC = () => {
-  const [view, setView] = useState<ViewMode>(ViewMode.HOME);
-  const [fatalError, setFatalError] = useState<string | null>(null);
+  const [view, setView] = React.useState<ViewMode>(ViewMode.HOME);
+  const [fatalError, setFatalError] = React.useState<string | null>(null);
 
   useEffect(() => {
     const handleError = (event: ErrorEvent) => {
