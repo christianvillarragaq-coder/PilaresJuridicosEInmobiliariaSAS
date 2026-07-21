@@ -29,7 +29,7 @@ const LandingView: React.FC<LandingViewProps> = ({ onSelect }) => {
           
           <div className="overflow-hidden max-h-0 group-hover:max-h-60 transition-all duration-1000 ease-in-out opacity-0 group-hover:opacity-100">
             <p className="text-gray-300 text-sm font-light mb-8 leading-relaxed italic">
-              "Especialistas en Derecho de Familia, Notarial e Inmobiliario con sede en el Edificio Seguros Bolívar, Bogotá."
+              "Especialistas en Cobranzas, Derecho Inmobiliario y Notarial con sede en el Edificio Seguros Bolívar, Bogotá."
             </p>
             <span className="inline-block border-2 border-[#d4af37] text-[#d4af37] px-10 py-3 font-bold text-[11px] tracking-[0.3em] uppercase hover:bg-[#d4af37] hover:text-white transition-all duration-300 shadow-lg">
               INGRESAR A LEGAL

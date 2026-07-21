@@ -28,12 +28,11 @@ const LegalView: React.FC = () => {
       </section>
 
       <section className="py-24 bg-gray-50 px-4">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
-            { t: 'Derecho de Familia', d: 'Matrimonios, divorcios, sucesiones, privación y suspensión de patria potestad, custodia, declaración de unión marital de hecho entre otros.', i: '⚖️' },
+            { t: 'Cobranzas', d: 'Recuperación efectiva de cartera.', i: '💰' },
             { t: 'Derecho Inmobiliario', d: 'Estudio de documentación, contratos, arriendos, ventas, permutas, estudio de títulos entre otros.', i: '🏠' },
-            { t: 'Derecho Notarial', d: 'Escrituración, registro, estudio de contratos, gestión matrimonios civiles, divorcios, declaraciones de unión marital de hecho, separación de bienes entre otros.', i: '📝' },
-            { t: 'Cobranzas', d: 'Recuperación efectiva de cartera.', i: '💰' }
+            { t: 'Derecho Notarial', d: 'Escrituración, registro, estudio de contratos, gestión matrimonios civiles, divorcios, declaraciones de unión marital de hecho, separación de bienes entre otros.', i: '📝' }
           ].map((s, i) => (
             <div key={i} className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg transition-all text-center">
               <div className="text-4xl mb-4">{s.i}</div>
