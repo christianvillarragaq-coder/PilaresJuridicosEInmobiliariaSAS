@@ -18,11 +18,11 @@ const LegalView: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="space-y-6">
             <h2 className="text-3xl font-serif text-[#0f1a2e] border-l-4 border-[#d4af37] pl-4 italic">Nuestra Misión</h2>
-            <p className="text-gray-600 leading-relaxed">Brindar soluciones efectivas bajo principios de ética y transparencia, garantizando la protección de los derechos de nuestros clientes.</p>
+            <p className="text-gray-600 leading-relaxed">Entregar un servicio personalizado, seguro, puntual, humano, serio, eficaz, confiable con calidad total y excelencia en la gestión desempeñada para nuestros clientes que requieran de asistencia legal en asesoría y gestión jurídica e inmobiliaria.</p>
           </div>
           <div className="space-y-6">
             <h2 className="text-3xl font-serif text-[#0f1a2e] border-l-4 border-[#0f1a2e] pl-4 italic">Nuestra Visión</h2>
-            <p className="text-gray-600 leading-relaxed">Ser líderes reconocidos a nivel nacional por la excelencia e innovación en la prestación de servicios jurídicos integrales.</p>
+            <p className="text-gray-600 leading-relaxed">Ser líderes reconocidos a nivel nacional por la excelencia e innovación en la prestación de servicios jurídicos e inmobiliarios con valores éticos y legales.</p>
           </div>
         </div>
       </section>
