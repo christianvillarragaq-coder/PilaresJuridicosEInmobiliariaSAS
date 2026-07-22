@@ -13,6 +13,7 @@ interface PropertyCardProps {
 const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete, onApprove }) => {
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [showInquiryModal, setShowInquiryModal] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Helper súper robusto para aislar el ID de YouTube
   const getEmbedUrl = (url: string) => {
@@ -54,6 +55,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete
   const displayCode = property.itemCode || `PJ-${(property.id || 'TEMP').slice(0, 4).toUpperCase()}`;
 
   const isYouTube = property.videoUrl?.includes('youtu') || false;
+  const images = property.imageUrls && property.imageUrls.length > 0 ? property.imageUrls : [property.image];
 
   const handleDelete = async () => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este inmueble? Esta acción no se puede deshacer.')) {
@@ -76,13 +78,56 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete
               PENDIENTE DE APROBACIÓN
             </div>
           )}
+          
           <img 
-            src={property.image} 
-            alt={property.title} 
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            src={images[currentImageIndex]} 
+            alt={`${property.title} - Imagen ${currentImageIndex + 1}`} 
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
-          <div className="absolute top-4 right-4 flex flex-col items-end gap-2">
-            <div className="bg-gold text-white px-3 py-1 rounded-full text-sm font-bold shadow">
+
+          {images.length > 1 && (
+            <>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+                }}
+                className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-[#d4af37] text-[#1a2e4c] hover:text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md transition-all z-20 cursor-pointer active:scale-95 text-lg font-bold select-none"
+                title="Imagen anterior"
+              >
+                &#8249;
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+                }}
+                className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-[#d4af37] text-[#1a2e4c] hover:text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md transition-all z-20 cursor-pointer active:scale-95 text-lg font-bold select-none"
+                title="Siguiente imagen"
+              >
+                &#8250;
+              </button>
+              
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-20 bg-black/45 px-2.5 py-1 rounded-full backdrop-blur-xs">
+                {images.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCurrentImageIndex(idx);
+                    }}
+                    className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                      idx === currentImageIndex ? 'bg-[#d4af37] w-3' : 'bg-white/60 hover:bg-white'
+                    }`}
+                    title={`Ver imagen ${idx + 1}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+
+          <div className="absolute top-4 right-4 flex flex-col items-end gap-2 z-20">
+            <div className="bg-[#1a2e4c]/95 backdrop-blur-xs text-white px-3.5 py-1.5 rounded-full text-xs font-bold shadow-lg border border-[#d4af37]/30 tracking-wider">
               {formatPrice(property.price)}
             </div>
             <div className="bg-white/90 backdrop-blur-sm text-[#1a2e4c] px-2 py-0.5 rounded text-[10px] font-bold shadow border border-gray-100 uppercase tracking-tighter">
@@ -92,7 +137,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete
           {property.videoUrl && (
             <button 
               onClick={() => setShowVideoModal(true)}
-              className="absolute bottom-4 right-4 bg-black/70 text-white p-2 rounded-full backdrop-blur-sm hover:bg-gold transition-colors hover:scale-110 flex items-center justify-center cursor-pointer"
+              className="absolute bottom-4 right-4 bg-black/70 text-white p-2 rounded-full backdrop-blur-sm hover:bg-gold transition-colors hover:scale-110 flex items-center justify-center cursor-pointer z-20"
             >
               ▶ Ver Video
             </button>
