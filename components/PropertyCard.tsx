@@ -83,6 +83,11 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, isAdmin, onDelete
             src={images[currentImageIndex]} 
             alt={`${property.title} - Imagen ${currentImageIndex + 1}`} 
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.onerror = null;
+              target.src = 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=800';
+            }}
           />
 
           {images.length > 1 && (
